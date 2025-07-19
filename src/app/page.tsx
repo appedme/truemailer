@@ -1,6 +1,6 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
-import { Header } from "@/components/header";
+import { TrueMailerNavbar } from "@/components/ui/navbar";
 import { Hero } from "@/components/ui/animated-hero";
 import { Features } from "@/components/features";
 import { Pricing } from "@/components/pricing";
@@ -16,15 +16,17 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen">
-      <Header />
-      <Hero />
-      <div id="features">
-        <Features />
+      <TrueMailerNavbar />
+      <div className="pt-20">
+        <Hero />
+        <div id="features">
+          <Features />
+        </div>
+        <div id="pricing">
+          <Pricing />
+        </div>
+        <Footer />
       </div>
-      <div id="pricing">
-        <Pricing />
-      </div>
-      <Footer />
     </div>
   );
 }
