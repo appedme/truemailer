@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { validateApiKey, recordEmailValidation, getUserMonthlyUsage } from '@/lib/db/queries';
+import { isDisposableDomain } from '@/lib/db/domain-sync';
 import { z } from 'zod';
 
 const validateEmailSchema = z.object({
@@ -21,22 +22,12 @@ async function validateEmail(email: string) {
   let domainValid = true;
   let mxRecordExists = true;
   
-  // Disposable email detection (simplified list - in production use comprehensive database)
-  const disposableDomains = [
-    '10minutemail.com',
-    'tempmail.org',
-    'guerrillamail.com',
-    'mailinator.com',
-    'temp-mail.org',
-    'throwaway.email',
-    'yopmail.com',
-    'maildrop.cc',
-    'sharklasers.com',
-    'guerrillamailblock.com'
-  ];
-  
-  const isDisposable = disposableDomains.includes(domain);
-  const isTemporal = isDisposable; // Simplified - in production, separate logic
+  // Advanced disposable email detection using our comprehensive database
+  const disposableCheck = await isDisposableDomain(domain);
+  const isDisposable = disposableCheck.isDisposable;
+  const isTemporal = isDisposable; // For now, treat disposable as temporal
+  const riskLevel = disposableCheck.riskLevel || 'unknown';
+  const detectionSource = disposableCheck.source;
   
   // Calculate confidence score
   let confidence = 0.5;
@@ -56,12 +47,15 @@ async function validateEmail(email: string) {
     disposable: isDisposable,
     temporal: isTemporal,
     confidence,
+    risk_level: riskLevel,
     details: {
       syntax: syntaxValid ? 'valid' : 'invalid',
       domain: domainValid ? 'valid' : 'invalid',
       mx_records: mxRecordExists,
       disposable: isDisposable,
       temporal: isTemporal,
+      risk_level: riskLevel,
+      detection_source: detectionSource,
     },
     response_time_ms: responseTime,
   };

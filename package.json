@@ -14,7 +14,8 @@
 		"db:migrate": "drizzle-kit migrate",
 		"db:push": "drizzle-kit push",
 		"db:studio": "drizzle-kit studio",
-		"db:init": "bun run scripts/init-db.ts"
+		"db:init": "bun run scripts/init-db.ts",
+		"sync:domains": "bun run scripts/sync-domains.ts"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^5.1.1",
