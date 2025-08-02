@@ -112,10 +112,10 @@ export function HeroSection() {
             Start Free Trial
             <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Button>
-          <Button variant="outline" size="lg" className="group px-8 py-6 text-lg">
+          {/* <Button variant="outline" size="lg" className="group px-8 py-6 text-lg">
             <Play className="mr-2 w-5 h-5" />
             Schedule Demo
-          </Button>
+          </Button> */}
         </motion.div>
 
         {/* Trust Indicators */}
