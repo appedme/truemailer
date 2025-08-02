@@ -14,6 +14,7 @@ https://github.com/FGRibreau/mailchecker/blob/master/list.txt
 allowed list :-
 https://github.com/disposable-email-domains/disposable-email-domains/blob/main/allowlist.conf
 ---
+
 ## 🧠 Product Overview
 
 **Mission:** Provide a lightweight, fast, and developer-friendly API & dashboard for comprehensive email verification and temporary mail detection.
