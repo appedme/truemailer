@@ -12,7 +12,7 @@ export const users = sqliteTable('users', {
   // TrueMailer specific fields
   plan: text('plan').default('free'), // free, starter, pro, enterprise
   emailValidationsUsed: integer('email_validations_used').default(0),
-  emailValidationsLimit: integer('email_validations_limit').default(1000), // monthly limit
+  emailValidationsLimit: integer('email_validations_limit').default(200), // monthly limit (free tier)
   isActive: integer('is_active', { mode: 'boolean' }).default(true),
 });
 
@@ -50,7 +50,7 @@ export const emailValidations = sqliteTable('email_validations', {
   createdAt: integer('created_at', { mode: 'timestamp' }).default(sql`(unixepoch())`),
 });
 
-// Disposable Email Providers table
+// Global Disposable Email Providers table (from GitHub sources)
 export const disposableProviders = sqliteTable('disposable_providers', {
   id: text('id').primaryKey(),
   domain: text('domain').notNull().unique(),
@@ -59,6 +59,36 @@ export const disposableProviders = sqliteTable('disposable_providers', {
   detectedAt: integer('detected_at', { mode: 'timestamp' }).default(sql`(unixepoch())`),
   lastSeenAt: integer('last_seen_at', { mode: 'timestamp' }).default(sql`(unixepoch())`),
   source: text('source'), // how we discovered this provider
+});
+
+// Global Allowlist table (domains that should never be blocked)
+export const globalAllowlist = sqliteTable('global_allowlist', {
+  id: text('id').primaryKey(),
+  domain: text('domain').notNull().unique(),
+  reason: text('reason'), // why this domain is allowed
+  addedBy: text('added_by'), // admin who added it
+  isActive: integer('is_active', { mode: 'boolean' }).default(true),
+  createdAt: integer('created_at', { mode: 'timestamp' }).default(sql`(unixepoch())`),
+});
+
+// User Custom Blocklist table
+export const userBlocklist = sqliteTable('user_blocklist', {
+  id: text('id').primaryKey(),
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  domain: text('domain').notNull(),
+  reason: text('reason'), // why user blocked this domain
+  isActive: integer('is_active', { mode: 'boolean' }).default(true),
+  createdAt: integer('created_at', { mode: 'timestamp' }).default(sql`(unixepoch())`),
+});
+
+// User Custom Allowlist table (highest priority)
+export const userAllowlist = sqliteTable('user_allowlist', {
+  id: text('id').primaryKey(),
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  domain: text('domain').notNull(),
+  reason: text('reason'), // why user allowed this domain
+  isActive: integer('is_active', { mode: 'boolean' }).default(true),
+  createdAt: integer('created_at', { mode: 'timestamp' }).default(sql`(unixepoch())`),
 });
 
 // User Usage Statistics table
@@ -124,6 +154,12 @@ export type EmailValidation = typeof emailValidations.$inferSelect;
 export type NewEmailValidation = typeof emailValidations.$inferInsert;
 export type DisposableProvider = typeof disposableProviders.$inferSelect;
 export type NewDisposableProvider = typeof disposableProviders.$inferInsert;
+export type GlobalAllowlist = typeof globalAllowlist.$inferSelect;
+export type NewGlobalAllowlist = typeof globalAllowlist.$inferInsert;
+export type UserBlocklist = typeof userBlocklist.$inferSelect;
+export type NewUserBlocklist = typeof userBlocklist.$inferInsert;
+export type UserAllowlist = typeof userAllowlist.$inferSelect;
+export type NewUserAllowlist = typeof userAllowlist.$inferInsert;
 export type UsageStats = typeof usageStats.$inferSelect;
 export type NewUsageStats = typeof usageStats.$inferInsert;
 export type Webhook = typeof webhooks.$inferSelect;

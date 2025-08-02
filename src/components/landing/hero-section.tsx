@@ -108,14 +108,18 @@ export function HeroSection() {
 
         {/* CTA Buttons */}
         <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-          <Button size="lg" className="group px-8 py-6 text-lg font-semibold">
-            Start Free Trial
-            <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          <Button size="lg" className="group px-8 py-6 text-lg font-semibold" asChild>
+            <a href="/handler/sign-up">
+              Start Free Trial
+              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </a>
           </Button>
-          {/* <Button variant="outline" size="lg" className="group px-8 py-6 text-lg">
-            <Play className="mr-2 w-5 h-5" />
-            Schedule Demo
-          </Button> */}
+          <Button variant="outline" size="lg" className="group px-8 py-6 text-lg" asChild>
+            <a href="/dashboard">
+              <Play className="mr-2 w-5 h-5" />
+              View Dashboard
+            </a>
+          </Button>
         </motion.div>
 
         {/* Trust Indicators */}

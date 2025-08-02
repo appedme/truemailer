@@ -1,65 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { validateApiKey, recordEmailValidation, getUserMonthlyUsage } from '@/lib/db/queries';
-import { isDisposableDomain } from '@/lib/db/domain-sync';
+import { validateEmail } from '@/lib/email-validation';
 import { z } from 'zod';
 
 const validateEmailSchema = z.object({
   email: z.string().email('Invalid email format'),
 });
-
-// Email validation logic
-async function validateEmail(email: string) {
-  const startTime = Date.now();
-  
-  // Extract domain
-  const domain = email.split('@')[1].toLowerCase();
-  
-  // Basic syntax validation
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const syntaxValid = emailRegex.test(email);
-  
-  // Check if domain exists (simplified - in production you'd check MX records)
-  let domainValid = true;
-  let mxRecordExists = true;
-  
-  // Advanced disposable email detection using our comprehensive database
-  const disposableCheck = await isDisposableDomain(domain);
-  const isDisposable = disposableCheck.isDisposable;
-  const isTemporal = isDisposable; // For now, treat disposable as temporal
-  const riskLevel = disposableCheck.riskLevel || 'unknown';
-  const detectionSource = disposableCheck.source;
-  
-  // Calculate confidence score
-  let confidence = 0.5;
-  if (syntaxValid) confidence += 0.3;
-  if (domainValid) confidence += 0.2;
-  if (!isDisposable) confidence += 0.3;
-  if (mxRecordExists) confidence += 0.2;
-  
-  confidence = Math.min(confidence, 1.0);
-  
-  const responseTime = Date.now() - startTime;
-  
-  return {
-    email,
-    domain,
-    valid: syntaxValid && domainValid && !isDisposable,
-    disposable: isDisposable,
-    temporal: isTemporal,
-    confidence,
-    risk_level: riskLevel,
-    details: {
-      syntax: syntaxValid ? 'valid' : 'invalid',
-      domain: domainValid ? 'valid' : 'invalid',
-      mx_records: mxRecordExists,
-      disposable: isDisposable,
-      temporal: isTemporal,
-      risk_level: riskLevel,
-      detection_source: detectionSource,
-    },
-    response_time_ms: responseTime,
-  };
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -111,8 +57,8 @@ export async function POST(request: NextRequest) {
 
     const { email } = validation.data;
 
-    // Validate the email
-    const result = await validateEmail(email);
+    // Validate the email using our comprehensive system
+    const result = await validateEmail(email, user.id);
 
     // Record the validation
     await recordEmailValidation({
@@ -122,7 +68,7 @@ export async function POST(request: NextRequest) {
       domain: result.domain,
       isValid: result.valid,
       isDisposable: result.disposable,
-      isTemporal: result.temporal,
+      isTemporal: result.disposable, // Use disposable for temporal
       confidence: result.confidence,
       syntaxValid: result.details.syntax === 'valid',
       domainValid: result.details.domain === 'valid',

@@ -75,6 +75,44 @@ export async function initializeDatabase() {
       )
     `);
 
+    // Create global_allowlist table
+    await db.run(sql`
+      CREATE TABLE IF NOT EXISTS global_allowlist (
+        id TEXT PRIMARY KEY,
+        domain TEXT NOT NULL UNIQUE,
+        reason TEXT,
+        added_by TEXT,
+        is_active INTEGER DEFAULT 1,
+        created_at INTEGER DEFAULT (unixepoch())
+      )
+    `);
+
+    // Create user_blocklist table
+    await db.run(sql`
+      CREATE TABLE IF NOT EXISTS user_blocklist (
+        id TEXT PRIMARY KEY,
+        user_id TEXT NOT NULL,
+        domain TEXT NOT NULL,
+        reason TEXT,
+        is_active INTEGER DEFAULT 1,
+        created_at INTEGER DEFAULT (unixepoch()),
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+      )
+    `);
+
+    // Create user_allowlist table
+    await db.run(sql`
+      CREATE TABLE IF NOT EXISTS user_allowlist (
+        id TEXT PRIMARY KEY,
+        user_id TEXT NOT NULL,
+        domain TEXT NOT NULL,
+        reason TEXT,
+        is_active INTEGER DEFAULT 1,
+        created_at INTEGER DEFAULT (unixepoch()),
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+      )
+    `);
+
     // Create usage_stats table
     await db.run(sql`
       CREATE TABLE IF NOT EXISTS usage_stats (
@@ -154,6 +192,19 @@ export async function initializeDatabase() {
       ('dp_8', 'maildrop.cc', 'high', 'initial_seed'),
       ('dp_9', 'sharklasers.com', 'high', 'initial_seed'),
       ('dp_10', 'guerrillamailblock.com', 'high', 'initial_seed')
+    `);
+
+    // Insert some common legitimate domains into global allowlist
+    await db.run(sql`
+      INSERT OR IGNORE INTO global_allowlist (id, domain, reason, added_by) VALUES
+      ('ga_1', 'gmail.com', 'Major email provider', 'system'),
+      ('ga_2', 'yahoo.com', 'Major email provider', 'system'),
+      ('ga_3', 'outlook.com', 'Major email provider', 'system'),
+      ('ga_4', 'hotmail.com', 'Major email provider', 'system'),
+      ('ga_5', 'icloud.com', 'Major email provider', 'system'),
+      ('ga_6', 'protonmail.com', 'Privacy-focused email provider', 'system'),
+      ('ga_7', 'fastmail.com', 'Legitimate email provider', 'system'),
+      ('ga_8', 'zoho.com', 'Business email provider', 'system')
     `);
 
     console.log('Database initialized successfully!');

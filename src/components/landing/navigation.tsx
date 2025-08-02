@@ -74,12 +74,14 @@ export function Navigation() {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-4">
-            <Button variant="ghost" size="sm">
-              Sign In
+            <Button variant="ghost" size="sm" asChild>
+              <a href="/handler/sign-in">Sign In</a>
             </Button>
-            <Button size="sm" className="group">
-              Start Free Trial
-              <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <Button size="sm" className="group" asChild>
+              <a href="/handler/sign-up">
+                Start Free Trial
+                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </a>
             </Button>
           </div>
 
@@ -118,12 +120,14 @@ export function Navigation() {
 
                 {/* Mobile CTA */}
                 <div className="flex flex-col gap-3 mt-6">
-                  <Button variant="outline" className="w-full">
-                    Sign In
+                  <Button variant="outline" className="w-full" asChild>
+                    <a href="/handler/sign-in">Sign In</a>
                   </Button>
-                  <Button className="w-full group">
-                    Start Free Trial
-                    <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <Button className="w-full group" asChild>
+                    <a href="/handler/sign-up">
+                      Start Free Trial
+                      <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </a>
                   </Button>
                 </div>
 
