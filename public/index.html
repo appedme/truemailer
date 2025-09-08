@@ -1,19 +1,322 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Hello, World!</title>
-	</head>
-	<body>
-		<h1 id="heading"></h1>
-		<script>
-			fetch('/message')
-				.then((resp) => resp.text())
-				.then((text) => {
-					const h1 = document.getElementById('heading');
-					h1.textContent = text;
-				});
-		</script>
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="TrueMailer - Clean, simple email validation service" />
+    <title>TrueMailer - Email Validation Made Simple</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📧</text></svg>">
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <div class="logo">
+          <span class="logo-icon">📧</span>
+          <span class="logo-text">TrueMailer</span>
+        </div>
+        <nav class="nav">
+          <ul class="nav-list">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="auth-buttons">
+          <button class="btn btn-outline">Sign In</button>
+          <button class="btn btn-primary">Get Started</button>
+        </div>
+        <button class="menu-toggle" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="hero-title">Email Validation Made Simple</h1>
+          <p class="hero-description">
+            Verify email addresses in real-time with our fast, accurate, and reliable email validation service.
+          </p>
+          <div class="hero-buttons">
+            <button class="btn btn-primary btn-large">Start Free Trial</button>
+            <button class="btn btn-outline btn-large">View Demo</button>
+          </div>
+        </div>
+        <div class="hero-image">
+          <div class="placeholder-box">
+            <span>Email Validation Dashboard</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Powerful Features</h2>
+          <p class="section-description">
+            Everything you need for accurate email validation
+          </p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3 class="feature-title">Lightning Fast</h3>
+            <p class="feature-description">
+              Validate emails in real-time with sub-100ms response times.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">✅</div>
+            <h3 class="feature-title">Highly Accurate</h3>
+            <p class="feature-description">
+              Advanced algorithms ensure 99.9% accuracy in validation.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🛡️</div>
+            <h3 class="feature-title">Secure & Compliant</h3>
+            <p class="feature-description">
+              SOC 2 compliant with enterprise-grade security measures.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🌐</div>
+            <h3 class="feature-title">Global Coverage</h3>
+            <p class="feature-description">
+              Support for international domains and email formats.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">How It Works</h2>
+          <p class="section-description">
+            Simple integration, powerful results
+          </p>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3 class="step-title">Sign Up</h3>
+            <p class="step-description">
+              Create an account in seconds with no credit card required.
+            </p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3 class="step-title">Integrate</h3>
+            <p class="step-description">
+              Add our API to your application with just a few lines of code.
+            </p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3 class="step-title">Validate</h3>
+            <p class="step-description">
+              Start validating emails in real-time with instant results.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Simple, Transparent Pricing</h2>
+          <p class="section-description">
+            Choose the plan that fits your needs. Upgrade or downgrade at any time.
+          </p>
+        </div>
+        <div class="pricing-grid">
+          <div class="pricing-card">
+            <h3 class="pricing-title">Free</h3>
+            <div class="pricing-price">
+              <span class="price">$0</span>
+              <span class="period">forever</span>
+            </div>
+            <p class="pricing-description">Perfect for getting started</p>
+            <ul class="pricing-features">
+              <li>200 validations/month</li>
+              <li>Basic email validation</li>
+              <li>Disposable domain detection</li>
+              <li>Community support</li>
+            </ul>
+            <button class="btn btn-outline btn-block">Get Started</button>
+          </div>
+          <div class="pricing-card pricing-card-popular">
+            <div class="popular-badge">Most Popular</div>
+            <h3 class="pricing-title">Pro</h3>
+            <div class="pricing-price">
+              <span class="price">$29</span>
+              <span class="period">per month</span>
+            </div>
+            <p class="pricing-description">Best for growing businesses</p>
+            <ul class="pricing-features">
+              <li>10,000 validations/month</li>
+              <li>Advanced validation features</li>
+              <li>Priority support</li>
+              <li>Custom allowlist/blocklist</li>
+              <li>Detailed analytics</li>
+            </ul>
+            <button class="btn btn-primary btn-block">Start Pro Trial</button>
+          </div>
+          <div class="pricing-card">
+            <h3 class="pricing-title">Enterprise</h3>
+            <div class="pricing-price">
+              <span class="price">Custom</span>
+            </div>
+            <p class="pricing-description">For large-scale applications</p>
+            <ul class="pricing-features">
+              <li>Unlimited validations</li>
+              <li>Dedicated infrastructure</li>
+              <li>24/7 phone support</li>
+              <li>Custom integrations</li>
+              <li>SLA guarantees</li>
+            </ul>
+            <button class="btn btn-outline btn-block">Contact Sales</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Trusted by Developers Worldwide</h2>
+          <p class="section-description">
+            See what our customers say about TrueMailer
+          </p>
+        </div>
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <div class="testimonial-rating">
+              <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
+            </div>
+            <p class="testimonial-content">
+              "TrueMailer's accuracy is incredible. We've reduced our fake signup rate by 95% and improved our email deliverability significantly."
+            </p>
+            <div class="testimonial-author">
+              <div class="author-avatar">
+                <span>S</span>
+              </div>
+              <div class="author-info">
+                <h4 class="author-name">Sarah Chen</h4>
+                <p class="author-role">CTO at TechFlow</p>
+              </div>
+            </div>
+          <div class="testimonial-card">
+            <div class="testimonial-rating">
+              <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
+            </div>
+            <p class="testimonial-content">
+              "The API is blazing fast and the documentation is excellent. Integration took less than an hour. Highly recommended!"
+            </p>
+            <div class="testimonial-author">
+              <div class="author-avatar">
+                <span>M</span>
+              </div>
+              <div class="author-info">
+                <h4 class="author-name">Marcus Rodriguez</h4>
+                <p class="author-role">Head of Growth</p>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-rating">
+              <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
+            </div>
+            <p class="testimonial-content">
+              "The real-time updates and comprehensive domain coverage give us confidence in our user validation process."
+            </p>
+            <div class="testimonial-author">
+              <div class="author-avatar">
+                <span>E</span>
+              </div>
+              <div class="author-info">
+                <h4 class="author-name">Emily Watson</h4>
+                <p class="author-role">Product Manager</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+      <div class="container">
+        <div class="cta-content">
+          <h2 class="cta-title">Ready to get started?</h2>
+          <p class="cta-description">
+            Join thousands of satisfied customers today
+          </p>
+          <button class="btn btn-primary btn-large">Start Free Trial</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-column">
+            <div class="logo">
+              <span class="logo-icon">📧</span>
+              <span class="logo-text">TrueMailer</span>
+            </div>
+            <p class="footer-description">
+              Making email validation simple, fast, and reliable for developers worldwide.
+            </p>
+          </div>
+          <div class="footer-column">
+            <h3 class="footer-title">Product</h3>
+            <ul class="footer-links">
+              <li><a href="#">Features</a></li>
+              <li><a href="#">Pricing</a></li>
+              <li><a href="#">Documentation</a></li>
+              <li><a href="#">API Reference</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3 class="footer-title">Company</h3>
+            <ul class="footer-links">
+              <li><a href="#">About</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3 class="footer-title">Legal</h3>
+            <ul class="footer-links">
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Security</a></li>
+            </ul>
+          </div>
+        <div class="footer-bottom">
+          <p class="footer-copyright">&copy; 2025 TrueMailer. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
 </html>
