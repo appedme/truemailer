@@ -1,98 +1,171 @@
-"use client";
+'use client';
 
-import { Typography, Button, Space, Row, Col } from 'antd';
+import { Typography, Button, Space, Row, Col, Card } from 'antd';
 import { PlayCircleOutlined, GithubOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { useTheme } from 'next-themes';
 
 const { Title, Paragraph } = Typography;
 
 export default function HeroSection() {
+  const { theme: currentTheme } = useTheme();
+  
+  const backgroundColor = currentTheme === 'dark' ? '#141414' : '#f0f8ff';
+  const cardBackgroundColor = currentTheme === 'dark' ? '#1f1f1f' : '#ffffff';
+  const borderColor = currentTheme === 'dark' ? '#303030' : '#f0f0f0';
+  const textColor = currentTheme === 'dark' ? '#ffffff' : '#000000';
+  const secondaryTextColor = currentTheme === 'dark' ? '#bfbfbf' : '#666666';
+  const primaryColor = currentTheme === 'dark' ? '#177ddc' : '#1890ff';
+  const successColor = currentTheme === 'dark' ? '#49aa19' : '#52c41a';
+  const infoColor = currentTheme === 'dark' ? '#17ddc' : '#1890ff';
+  const purpleColor = currentTheme === 'dark' ? '#9254de' : '#722ed1';
+
   return (
-    <section id="home" className="py-20 bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="container mx-auto px-4">
-        <Row gutter={[48, 48]} align="middle">
-          <Col xs={24} lg={14}>
-            <Space direction="vertical" size="large" className="w-full">
-              <div>
-                <Title level={1} className="mb-4 text-4xl lg:text-6xl font-bold">
-                  📧 <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                    Truemailer
-                  </span>
-                </Title>
-                <Title level={2} className="text-gray-700 font-normal mb-6">
-                  Fast, Reliable Email Validation API
-                </Title>
-              </div>
-
-              <Paragraph className="text-xl text-gray-600 leading-relaxed max-w-2xl">
-                Validate emails in real-time with our lightning-fast API. Detect disposable addresses, 
-                verify domains, and prevent spam before they enter your system. 
-                <strong> Built for developers, trusted by businesses.</strong>
-              </Paragraph>
-
-              <div className="flex flex-wrap gap-4 pt-4">
-                <div className="flex items-center gap-2 text-green-600">
-                  <ThunderboltOutlined />
-                  <span className="font-semibold">Edge-deployed & fast</span>
+    <section id="home">
+      <div style={{ 
+        padding: '80px 16px', 
+        background: backgroundColor,
+        color: textColor
+      }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <Row gutter={[48, 48]} align="middle">
+            <Col xs={24} lg={14}>
+              <Space direction="vertical" size="large" style={{ width: '100%' }}>
+                <div>
+                  <Title level={1} style={{ 
+                    marginBottom: '16px', 
+                    fontSize: '36px',
+                    color: textColor
+                  }}>
+                    📧 <span style={{ 
+                      background: currentTheme === 'dark' 
+                        ? 'linear-gradient(to right, #177ddc, #9254de)' 
+                        : 'linear-gradient(to right, #1890ff, #722ed1)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent'
+                    }}>
+                      Truemailer
+                    </span>
+                  </Title>
+                  <Title level={2} style={{ 
+                    color: currentTheme === 'dark' ? '#d9d9d9' : '#595959',
+                    fontWeight: 'normal',
+                    marginBottom: '24px'
+                  }}>
+                    Fast, Reliable Email Validation API
+                  </Title>
                 </div>
-                <div className="flex items-center gap-2 text-blue-600">
-                  <PlayCircleOutlined />
-                  <span className="font-semibold">No authentication required</span>
-                </div>
-                <div className="flex items-center gap-2 text-purple-600">
-                  <GithubOutlined />
-                  <span className="font-semibold">Open source</span>
-                </div>
-              </div>
 
-              <Space size="large" className="pt-6">
-                <Button 
-                  type="primary" 
-                  size="large" 
-                  className="h-12 px-8 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-shadow"
-                  onClick={() => document.getElementById('try-now')?.scrollIntoView({ behavior: 'smooth' })}
-                >
-                  Try It Now - Free
-                </Button>
-                <Button 
-                  size="large" 
-                  className="h-12 px-8 rounded-lg font-semibold"
-                  onClick={() => document.getElementById('documentation')?.scrollIntoView({ behavior: 'smooth' })}
-                  ghost
-                >
-                  View Documentation
-                </Button>
-              </Space>
-            </Space>
-          </Col>
+                <Paragraph style={{ 
+                  fontSize: '18px', 
+                  color: secondaryTextColor, 
+                  lineHeight: '1.6',
+                  maxWidth: '600px'
+                }}>
+                  Validate emails in real-time with our lightning-fast API. Detect disposable addresses, 
+                  verify domains, and prevent spam before they enter your system. 
+                  <strong> Built for developers, trusted by businesses.</strong>
+                </Paragraph>
 
-          <Col xs={24} lg={10}>
-            <div className="relative">
-              <div className="bg-white rounded-2xl shadow-2xl p-8">
-                <div className="space-y-4">
-                  <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm">
-                    <div className="text-gray-500"># Quick validation example</div>
-                    <div className="text-blue-300">curl</div>
-                    <div className="text-yellow-300 ml-2">"https://api.truemailer.io/validate?email=test@gmail.com"</div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', paddingTop: '16px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: successColor }}>
+                    <ThunderboltOutlined />
+                    <span style={{ fontWeight: '600' }}>Edge-deployed & fast</span>
                   </div>
-                  
-                  <div className="bg-green-50 border border-green-200 p-4 rounded-lg">
-                    <div className="text-green-800 font-mono text-sm">
-                      <div>✅ Valid syntax: true</div>
-                      <div>✅ Domain exists: true</div>
-                      <div>✅ Not disposable: true</div>
-                      <div>📊 Spam score: 5/100</div>
-                      <div className="font-bold mt-2">🎉 Verdict: GOOD</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: infoColor }}>
+                    <PlayCircleOutlined />
+                    <span style={{ fontWeight: '600' }}>No authentication required</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: purpleColor }}>
+                    <GithubOutlined />
+                    <span style={{ fontWeight: '600' }}>Open source</span>
+                  </div>
+                </div>
+
+                <Space size="large" style={{ paddingTop: '24px' }}>
+                  <Button 
+                    type="primary" 
+                    size="large" 
+                    style={{ 
+                      height: '48px', 
+                      padding: '0 32px',
+                      borderRadius: '6px',
+                      fontWeight: '600',
+                      boxShadow: currentTheme === 'dark' 
+                        ? '0 4px 12px rgba(23, 125, 220, 0.3)' 
+                        : '0 4px 12px rgba(24, 144, 255, 0.3)',
+                      background: primaryColor,
+                      borderColor: primaryColor
+                    }}
+                    onClick={() => document.getElementById('try-now')?.scrollIntoView({ behavior: 'smooth' })}
+                  >
+                    Try It Now - Free
+                  </Button>
+                  <Button 
+                    size="large" 
+                    style={{ 
+                      height: '48px', 
+                      padding: '0 32px',
+                      borderRadius: '6px',
+                      fontWeight: '600',
+                    //   color: textColor,
+                      borderColor: currentTheme === 'dark' ? '#434343' : '#d9d9d9'
+                    }}
+                    onClick={() => document.getElementById('documentation')?.scrollIntoView({ behavior: 'smooth' })}
+                  >
+                    View Documentation
+                  </Button>
+                </Space>
+              </Space>
+            </Col>
+
+            <Col xs={24} lg={10}>
+              <div style={{ position: 'relative' }}>
+                <Card style={{ 
+                  borderRadius: '12px',
+                  boxShadow: currentTheme === 'dark' 
+                    ? '0 8px 24px rgba(0, 0, 0, 0.5)' 
+                    : '0 8px 24px rgba(0, 0, 0, 0.1)',
+                  background: cardBackgroundColor,
+                  borderColor: borderColor
+                }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                    <div style={{ 
+                      background: currentTheme === 'dark' ? '#1d1d1d' : '#1f1f1f',
+                      color: '#73d13d',
+                      padding: '16px',
+                      borderRadius: '8px',
+                      fontFamily: 'monospace',
+                      fontSize: '14px'
+                    }}>
+                      <div style={{ color: '#5959' }}># Quick validation example</div>
+                      <div style={{ color: '#40a9ff' }}>curl</div>
+                      <div style={{ color: '#ffd666', marginLeft: '8px' }}>"https://api.truemailer.io/validate?email=test@gmail.com"</div>
+                    </div>
+                    
+                    <div style={{ 
+                      background: currentTheme === 'dark' ? '#1d2b1d' : '#f6ffed',
+                      border: `1px solid ${currentTheme === 'dark' ? '#2d422d' : '#b7eb8f'}`,
+                      padding: '16px',
+                      borderRadius: '8px'
+                    }}>
+                      <div style={{ 
+                        color: currentTheme === 'dark' ? '#95de64' : '#389e0d',
+                        fontFamily: 'monospace',
+                        fontSize: '14px'
+                      }}>
+                        <div>✅ Valid syntax: true</div>
+                        <div>✅ Domain exists: true</div>
+                        <div>✅ Not disposable: true</div>
+                        <div>📊 Spam score: 5/100</div>
+                        <div style={{ fontWeight: 'bold', marginTop: '8px' }}>🎉 Verdict: GOOD</div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </Card>
               </div>
-              
-              {/* Decorative elements */}
-              <div className="absolute -top-4 -right-4 w-8 h-8 bg-blue-500 rounded-full opacity-60"></div>
-              <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-purple-500 rounded-full opacity-40"></div>
-            </div>
-          </Col>
-        </Row>
+            </Col>
+          </Row>
+        </div>
       </div>
     </section>
   );

@@ -1,20 +1,28 @@
+'use client';
+
 import { authClient } from "@/lib/auth-client";
 import { useForm } from "@tanstack/react-form";
 import { toast } from "sonner";
 import z from "zod";
-import Loader from "./loader";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
+import { Button, Input, Form, Typography } from 'antd';
 import { useRouter } from "next/navigation";
+import { useTheme } from 'next-themes';
+
+const { Title, Text } = Typography;
 
 export default function SignInForm({
   onSwitchToSignUp,
 }: {
   onSwitchToSignUp: () => void;
 }) {
-  const router = useRouter()
+  const router = useRouter();
   const { isPending } = authClient.useSession();
+  const { theme: currentTheme } = useTheme();
+
+  const backgroundColor = currentTheme === 'dark' ? '#1f1f1f' : '#ffffff';
+  const textColor = currentTheme === 'dark' ? '#ffffff' : '#000000';
+  const secondaryTextColor = currentTheme === 'dark' ? '#bfbfbf' : '#666666';
+  const primaryColor = currentTheme === 'dark' ? '#177ddc' : '#1890ff';
 
   const form = useForm({
     defaultValues: {
@@ -29,7 +37,7 @@ export default function SignInForm({
         },
         {
           onSuccess: () => {
-            router.push("/dashboard")
+            router.push("/dashboard");
             toast.success("Sign in successful");
           },
           onError: (error) => {
@@ -40,92 +48,98 @@ export default function SignInForm({
     },
     validators: {
       onSubmit: z.object({
-        email: z.email("Invalid email address"),
+        email: z.string().email("Invalid email address"),
         password: z.string().min(8, "Password must be at least 8 characters"),
       }),
     },
   });
 
   if (isPending) {
-    return <Loader />;
+    return (
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '200px' 
+      }}>
+        <div>Loading...</div>
+      </div>
+    );
   }
 
   return (
-    <div className="mx-auto w-full mt-10 max-w-md p-6">
-      <h1 className="mb-6 text-center text-3xl font-bold">Welcome Back</h1>
+    <div style={{ 
+      maxWidth: '400px', 
+      margin: '40px auto', 
+      padding: '24px',
+      background: backgroundColor,
+      borderRadius: '8px'
+    }}>
+      <Title level={2} style={{ 
+        textAlign: 'center', 
+        marginBottom: '24px',
+        color: textColor
+      }}>
+        Welcome Back
+      </Title>
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
+      <Form
+        layout="vertical"
+        onFinish={(values) => {
           form.handleSubmit();
         }}
-        className="space-y-4"
       >
-        <div>
-          <form.Field name="email">
-            {(field) => (
-              <div className="space-y-2">
-                <Label htmlFor={field.name}>Email</Label>
-                <Input
-                  id={field.name}
-                  name={field.name}
-                  type="email"
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                />
-                {field.state.meta.errors.map((error) => (
-                  <p key={error?.message} className="text-red-500">
-                    {error?.message}
-                  </p>
-                ))}
-              </div>
-            )}
-          </form.Field>
-        </div>
+        <Form.Item
+          label={<Text style={{ color: textColor }}>Email</Text>}
+          name="email"
+          rules={[{ required: true, message: 'Please enter your email' }]}
+        >
+          <Input
+            type="email"
+            placeholder="Enter your email"
+            style={{
+              background: currentTheme === 'dark' ? '#141414' : '#ffffff',
+              borderColor: currentTheme === 'dark' ? '#434343' : '#d9d9d9',
+              color: textColor
+            }}
+          />
+        </Form.Item>
 
-        <div>
-          <form.Field name="password">
-            {(field) => (
-              <div className="space-y-2">
-                <Label htmlFor={field.name}>Password</Label>
-                <Input
-                  id={field.name}
-                  name={field.name}
-                  type="password"
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                />
-                {field.state.meta.errors.map((error) => (
-                  <p key={error?.message} className="text-red-500">
-                    {error?.message}
-                  </p>
-                ))}
-              </div>
-            )}
-          </form.Field>
-        </div>
+        <Form.Item
+          label={<Text style={{ color: textColor }}>Password</Text>}
+          name="password"
+          rules={[{ required: true, message: 'Please enter your password' }]}
+        >
+          <Input.Password
+            placeholder="Enter your password"
+            style={{
+              background: currentTheme === 'dark' ? '#141414' : '#ffffff',
+              borderColor: currentTheme === 'dark' ? '#434343' : '#d9d9d9',
+              color: textColor
+            }}
+          />
+        </Form.Item>
 
-        <form.Subscribe>
-          {(state) => (
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={!state.canSubmit || state.isSubmitting}
-            >
-              {state.isSubmitting ? "Submitting..." : "Sign In"}
-            </Button>
-          )}
-        </form.Subscribe>
-      </form>
+        <Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            block
+            style={{
+              background: primaryColor,
+              borderColor: primaryColor
+            }}
+          >
+            Sign In
+          </Button>
+        </Form.Item>
+      </Form>
 
-      <div className="mt-4 text-center">
-        <Button
-          variant="link"
+      <div style={{ textAlign: 'center', marginTop: '16px' }}>
+        <Button 
+          type="link" 
           onClick={onSwitchToSignUp}
-          className="text-indigo-600 hover:text-indigo-800"
+          style={{ color: primaryColor }}
         >
           Need an account? Sign Up
         </Button>
