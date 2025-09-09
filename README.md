@@ -1,128 +1,77 @@
-# 📧 Truemailer
+# my-better-t-app
 
-Truemailer is a fast, lightweight **Email Validation API** built with [Hono](https://hono.dev) and deployed on **Cloudflare Workers**.
-It helps developers and businesses verify emails in real time, detect disposable/temporary addresses, and filter out spammy emails before they enter your system.
+This project was created with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack that combines Next.js, Hono, TRPC, and more.
 
----
+## Features
 
-## 🚀 Features
+- **TypeScript** - For type safety and improved developer experience
+- **Next.js** - Full-stack React framework
+- **TailwindCSS** - Utility-first CSS for rapid UI development
+- **shadcn/ui** - Reusable UI components
+- **Hono** - Lightweight, performant server framework
+- **tRPC** - End-to-end type-safe APIs
+- **workers** - Runtime environment
+- **Drizzle** - TypeScript-first ORM
+- **SQLite/Turso** - Database engine
+- **Authentication** - Better-Auth
+- **Turborepo** - Optimized monorepo build system
 
-* ✅ **Syntax Validation** — RFC-compliant email format check.
-* ✅ **Domain & MX Check** — verifies if the domain exists and has mail servers.
-* ✅ **Disposable Email Detection** — blocks temp mail services (10minutemail, yopmail, etc.).
-* ✅ **Spam Score Detection** — heuristic scoring based on domain, randomness, and trust signals.
-* ✅ **Fast & Edge Ready** — powered by Hono + Cloudflare Workers.
-* ✅ **Public API** — no authentication required for basic usage.
+## Getting Started
 
----
-
-## 📦 API Usage
-
-### Base URL
-
-```
-https://api.truemailer.io
-```
-
-### Validate an Email
-
-**Endpoint:**
-
-```
-GET /validate?email=<email>
-```
-
-**Example:**
+First, install the dependencies:
 
 ```bash
-curl "https://api.truemailer.io/validate?email=test@gmail.com"
+bun install
+```
+## Database Setup
+
+This project uses SQLite with Drizzle ORM.
+
+1. Start the local SQLite database:
+Local development for a Cloudflare D1 database will already be running as part of the `wrangler dev` command.
+
+2. Update your `.env` file in the `apps/server` directory with the appropriate connection details if needed.
+
+3. Apply the schema to your database:
+```bash
+bun db:push
 ```
 
-**Response:**
 
-```json
-{
-  "email": "test@gmail.com",
-  "valid_syntax": true,
-  "domain_exists": true,
-  "is_disposable": false,
-  "spam_score": 5,
-  "verdict": "good"
-}
-```
-
----
-
-## 📊 Spam Score Guide
-
-* **0 – 20** → ✅ Good
-* **21 – 60** → ⚠️ Suspicious
-**61+** → 🚫 Likely Spam
-
----
-
-## 🛠 Tech Stack
-
-* [Hono](https://hono.dev) — lightweight web framework
-* [Cloudflare Workers](https://workers.cloudflare.com) — edge-native deployment
-* [Bun](https://bun.sh) — local development runtime
-* [DNS Lookups](https://nodejs.org/api/dns.html) — MX record validation
-* Custom **disposable email blocklist**
-
----
-
-## 📂 Project Structure
-
-```
-truemailer/
-│── src/
-│   ├── index.ts        # Main Hono app
-│   ├── utils/
-│   │   ├── validate.ts # Syntax & MX checks
-│   │   ├── spam.ts     # Spam scoring heuristics
-│   │   └── disposable.ts # Disposable domain list
-│── package.json
-│── wrangler.toml       # Cloudflare Workers config
-│── README.md
-```
-
----
-
-## ⚡️ Local Development
+Then, run the development server:
 
 ```bash
-# Clone the repo
-git clone https://github.com/appedme/truemailer.git
-cd truemailer
-
-# Install dependencies
-bun install   # or npm install
-
-# Start local dev server
-bun run dev
+bun dev
 ```
 
----
+Open [http://localhost:3001](http://localhost:3001) in your browser to see the web application.
+The API is running at [http://localhost:3000](http://localhost:3000).
 
-## 🌍 Deployment
 
-Truemailer is designed for **Cloudflare Workers**.
-To deploy:
 
-```bash
-wrangler publish
+
+
+## Deployment (Cloudflare Wrangler)
+- Server dev: cd apps/server && bun dev
+- Server deploy: cd apps/server && bun deploy
+
+
+## Project Structure
+
+```
+my-better-t-app/
+├── apps/
+│   ├── web/         # Frontend application (Next.js)
+│   └── server/      # Backend API (Hono, TRPC)
 ```
 
----
+## Available Scripts
 
-## 🤝 Contributing
-
-Pull requests are welcome!
-If you’d like to add more disposable domains, improve spam heuristics, or extend API functionality, feel free to fork and contribute.
-
----
-
-## 📜 License
-
-MIT License © 2025 [Shaswat Raj](https://sh20raj.github.io)
-
+- `bun dev`: Start all applications in development mode
+- `bun build`: Build all applications
+- `bun dev:web`: Start only the web application
+- `bun dev:server`: Start only the server
+- `bun check-types`: Check TypeScript types across all apps
+- `bun db:push`: Push schema changes to database
+- `bun db:studio`: Open database studio UI
+- `cd apps/server && bun db:local`: Start the local SQLite database
