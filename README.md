@@ -12,6 +12,7 @@ It helps developers and businesses verify emails in real time, detect disposable
 * ✅ **Disposable Email Detection** — blocks temp mail services (10minutemail, yopmail, etc.).
 * ✅ **Spam Score Detection** — heuristic scoring based on domain, randomness, and trust signals.
 * ✅ **Fast & Edge Ready** — powered by Hono + Cloudflare Workers.
+* ✅ **Public API** — no authentication required for basic usage.
 
 ---
 
@@ -28,13 +29,13 @@ https://api.truemailer.io
 **Endpoint:**
 
 ```
-GET /validate?email=<email>&apikey=<your_api_key>
+GET /validate?email=<email>
 ```
 
 **Example:**
 
 ```bash
-curl "https://api.truemailer.io/validate?email=test@gmail.com&apikey=YOUR_KEY"
+curl "https://api.truemailer.io/validate?email=test@gmail.com"
 ```
 
 **Response:**
@@ -56,17 +57,7 @@ curl "https://api.truemailer.io/validate?email=test@gmail.com&apikey=YOUR_KEY"
 
 * **0 – 20** → ✅ Good
 * **21 – 60** → ⚠️ Suspicious
-* **61+** → 🚫 Likely Spam
-
----
-
-## 🔑 Authentication
-
-You need an **API key** to use Truemailer.
-
-1. Sign up at [truemailer.io](https://truemailer.io)
-2. Get your key from the dashboard
-3. Pass it as a query param (`apikey=YOUR_KEY`)
+**61+** → 🚫 Likely Spam
 
 ---
 
