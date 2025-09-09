@@ -1,24 +1,21 @@
 import type { Metadata } from 'next'
 import React from 'react'
+import Navigation from '@/components/Navigation'
 
-
-export const metadata : Metadata = {
-    title: 'Truemailer - Email Check & Validation',
-    description: 'Truemailer is a powerful email verification and validation tool designed to ensure the accuracy and deliverability of your email lists. With Truemailer, you can easily identify and eliminate invalid, inactive, or risky email addresses, helping you maintain a clean and effective email marketing strategy.',
+export const metadata: Metadata = {
+    title: 'Truemailer - Fast Email Validation API | Real-time Email Verification',
+    description: 'Validate emails in real-time with our fast, edge-deployed API. Detect disposable emails, check domain validity, and prevent spam with RFC-compliant validation.',
 }
 
-
-
-export default function layout({
+export default function LandingLayout({
     children
 }: {
     children: React.ReactNode
 }) {
   return (
     <div>
-        {
-            children
-        }
+        <Navigation />
+        {children}
     </div>
   )
 }
